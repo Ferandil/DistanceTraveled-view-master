@@ -26,6 +26,8 @@ public class Route {
 
     private Long userID;
 
+    private Long dateOfCreation;
+
     public Route() {
     }
 
@@ -36,6 +38,18 @@ public class Route {
     public Route(List<Coordinate> coordinates, Long userID) {
         this.coordinates = coordinates;
         this.userID = userID;
+    }
+
+    public Route(Route route){
+        this.coordinates = route.coordinates;
+        this.dateOfCreation = route.dateOfCreation;
+        this.userID = route.userID;
+    }
+
+    public Route(List<Coordinate> coordinates, Long userID, Long dateOfCreation){
+        this.coordinates = coordinates;
+        this.userID = userID;
+        this.dateOfCreation = dateOfCreation;
     }
 
     public String toString() {
@@ -88,4 +102,8 @@ public class Route {
     public void setUserID(Long userID) {
         this.userID = userID;
     }
+
+    public void setDateOfCreation(Long dateOfCreation){ this.dateOfCreation = dateOfCreation; }
+
+    public Long getDateOfCreation(){ return this.dateOfCreation; }
 }

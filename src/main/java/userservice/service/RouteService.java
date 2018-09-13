@@ -2,6 +2,7 @@ package userservice.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import userservice.model.Coordinate;
 import userservice.model.Route;
@@ -26,15 +27,21 @@ public class RouteService {
 
     private RouteRepository repository;
 
+    @Autowired
     public RouteService(RouteRepository repository) {
         this.repository = repository;
     }
 
-    public Long saveRoute(List<Coordinate> coordinates, Long userID) {
-        Route route = new Route(coordinates, userID);
+    public Long saveRoute(List<Coordinate> coordinates, Long userID, Long dateOfCreation) {
+        Route route = new Route(coordinates, userID, dateOfCreation);
         log.info("routeService:: new route " + route.toString());
         repository.save(route);
         log.info("routeService:: new route " + route.toString());
+        return route.getRouteID();
+    }
+
+    public Long saveRoute(Route route){
+        repository.save(route);
         return route.getRouteID();
     }
 
@@ -58,9 +65,19 @@ public class RouteService {
         return repository.findById(id);
     }
 
-    public List<Route> findAll() {
+    public Iterable<Route> findAll() {
         List<Route> list = new ArrayList<>();
         repository.findAll().forEach(list::add);
+        return list;
+    }
+
+    public void deletAll(){
+        repository.deleteAll();
+    }
+
+    public Iterable<Route> findRutesForCurentDates(Long dateBegin, Long dateEnd) {
+        Iterable<Route> list = new ArrayList<>();
+        list = repository.findAllBydateOfCreationBetween(dateBegin, dateEnd);
         return list;
     }
 }

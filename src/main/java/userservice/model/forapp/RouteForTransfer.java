@@ -1,40 +1,44 @@
 package userservice.model.forapp;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import userservice.model.UserCoord;
+import userservice.model.Route;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class RouteForTransfer {
-    private List<UserCoord> userCoords;
+    private List<Route> userRoutes;
     private String token;
 
     public RouteForTransfer(){
-        userCoords = new ArrayList<UserCoord>();
+        userRoutes = new ArrayList<Route>();
     }
-    public RouteForTransfer(List<UserCoord> userCoords, String token) {
-        this.userCoords = userCoords;
-        this.token = token;
+    public RouteForTransfer(List<Route> userRoutes){
+        this.userRoutes = userRoutes;
     }
 
-    public void addCoordsToList(List<UserCoord> userCoordList){
-        if(!userCoordList.isEmpty()){
-            userCoordList.forEach(userCoords::add);
+    public void addRouteToList(Route route){
+        if(route != null){
+            userRoutes.add(route);
         }
     }
 
-    public void addCoordsToList(UserCoord[] userCoordArray){
-        if(userCoordArray.length != 0){
-            for (UserCoord userCoord : userCoordArray) {
-                userCoords.add(userCoord);
+    public void addAllroutesToList(List<Route> routes){
+        if(routes != null){
+            for (Route route: routes) {
+                userRoutes.add(route);
             }
         }
     }
+    public void setToken(String token){
+        this.token = token;
+    }
 
     @JsonGetter
-    public List<UserCoord> getUserCoords(){
-        return this.userCoords;
+    public List<Route> getUserCoords(){
+        return this.userRoutes;
     }
     @JsonGetter
     public String getToken(){

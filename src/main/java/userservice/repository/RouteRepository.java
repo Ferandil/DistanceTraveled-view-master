@@ -6,4 +6,7 @@ import userservice.model.Route;
  * repository for Route Node Entity
  */
 public interface RouteRepository extends Neo4jRepository<Route, Long> {
+    public Iterable<Route> findAllByUserIDEquals(Long userId);
+
+    public Iterable<Route> findAllBydateOfCreationBetween(Long dateBegin, Long dateEnd);
 }

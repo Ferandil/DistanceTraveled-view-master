@@ -27,8 +27,7 @@ public class User{
 
     private String lastName;
 
-    // constructor that exist only fo JPA  //Kondratenkov
-    protected User() {
+    public User() {
     }
 
     public User(String login, String hashPassword) {

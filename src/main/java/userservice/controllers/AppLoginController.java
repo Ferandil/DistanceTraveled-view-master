@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import userservice.common.JWTUtils;
 import userservice.model.User;
 import userservice.service.UserService;
 
+@Controller
 public class AppLoginController {
     UserService userService;
 
@@ -24,8 +26,7 @@ public class AppLoginController {
     }
 
     @RequestMapping(value = "/upload/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public  @ResponseBody
-    ResponseEntity<User> clientLogin(@RequestBody User user){
+    public  @ResponseBody ResponseEntity<User> clientLogin(@RequestBody User user){
         User userDataToCheck;
         HttpHeaders headers = new HttpHeaders();
         if((userDataToCheck = userService.findByLogin(user.getLogin())) != null){
@@ -35,10 +36,10 @@ public class AppLoginController {
                 return response;
             }
             else{
-                return null;//new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+                return new ResponseEntity<User>(new User(), headers, HttpStatus.NOT_FOUND);
             }
         }else{
-            return null;//new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<User>(new User(), headers, HttpStatus.NOT_FOUND);
         }
     }
 }
